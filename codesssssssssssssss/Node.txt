@@ -1,0 +1,168 @@
+Yes 👍 these are **different small questions** from Node.js basics. I’ll give you **super easy, beginner-friendly code** for each one so you can understand quickly.
+
+---
+
+# ✅ 1. Simple HTTP Server
+
+```js
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+    res.write("Hello, this is my first Node.js server!");
+    res.end();
+});
+
+server.listen(3000, () => {
+    console.log("Server running at http://localhost:3000");
+});
+```
+
+---
+
+# ✅ 2. Show Requested URL
+
+```js
+const http = require("http");
+
+http.createServer((req, res) => {
+    res.write("You requested: " + req.url);
+    res.end();
+}).listen(3000);
+```
+
+👉 If you open:
+
+```
+http://localhost:3000/test
+```
+
+Output → `You requested: /test`
+
+---
+
+# ✅ 3. Display Current Date & Time
+
+```js
+const http = require("http");
+
+http.createServer((req, res) => {
+    const date = new Date();
+    res.write("Current Date & Time: " + date);
+    res.end();
+}).listen(3000);
+```
+
+---
+
+# ✅ 4. Simple Calculator using URL
+
+```js
+const http = require("http");
+const url = require("url");
+
+http.createServer((req, res) => {
+    const q = url.parse(req.url, true).query;
+
+    const a = parseInt(q.num1);
+    const b = parseInt(q.num2);
+    const op = q.op;
+
+    let result;
+
+    if (op === "add") result = a + b;
+    else if (op === "sub") result = a - b;
+    else if (op === "mul") result = a * b;
+    else if (op === "div") result = a / b;
+    else result = "Invalid operation";
+
+    res.write("Result: " + result);
+    res.end();
+}).listen(3000);
+```
+
+👉 Run like:
+
+```
+http://localhost:3000/?num1=10&num2=5&op=add
+```
+
+---
+
+# ✅ 5. File Operations (Read File)
+
+```js
+const http = require("http");
+const fs = require("fs");
+
+http.createServer((req, res) => {
+    fs.readFile("sample.txt", (err, data) => {
+        if (err) throw err;
+        res.write(data);
+        res.end();
+    });
+}).listen(3000);
+```
+
+---
+
+# ✅ 6. Write to File
+
+```js
+const fs = require("fs");
+
+fs.writeFile("sample.txt", "Hello Viranshi!", (err) => {
+    if (err) throw err;
+    console.log("File created!");
+});
+```
+
+---
+
+# ✅ 7. Append to File
+
+```js
+const fs = require("fs");
+
+fs.appendFile("sample.txt", "\nNew Line Added", (err) => {
+    if (err) throw err;
+    console.log("Data appended!");
+});
+```
+
+---
+
+# ✅ 8. Display File Line by Line (Important)
+
+```js
+const http = require("http");
+const fs = require("fs");
+
+http.createServer((req, res) => {
+    fs.readFile("sample.txt", "utf8", (err, data) => {
+        if (err) throw err;
+
+        const lines = data.split("\n");
+
+        lines.forEach((line, index) => {
+            res.write(`Line ${index + 1}: ${line}<br>`);
+        });
+
+        res.end();
+    });
+}).listen(3000);
+```
+
+---
+
+# 💡 Quick Tip (Exam Trick)
+
+These are usually asked as:
+
+* "Create server" → use `http`
+* "Get URL" → use `req.url`
+* "Calculator" → use `url.parse()`
+* "File" → use `fs module`
+
+---
+
+If you want, I can combine ALL of these into **one single project (menu-based server)** — very useful for exams 🔥

@@ -1,0 +1,341 @@
+--------React with AJAX
+// React with AJAX
+
+import React, { useState, useEffect } from "react";
+
+function App() {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    // AJAX call using fetch
+    fetch("/movies.json")
+      .then(response => response.json())
+      .then(data => setMovies(data))
+      //.catch(error => console.log(error));
+  }, []);
+
+  return (
+    <div>
+      <h2>Movie List</h2>
+
+      <table border="1" cellPadding="10">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Rating</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {movies.map((movie, index) => (
+            <tr key={index}>
+              <td>{movie.title}</td>
+              <td>{movie.rating}</td>
+              <td>{movie.duration}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----Fetching JSON
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ajax JSON Table</title>
+</head>
+<body>
+
+<button onclick="loadEmployeesJSON()">Load Employees</button>
+
+<p id="d">Employee Records:</p>
+
+<script>
+
+function loadEmployeesJSON(){
+
+    // DIFFERENCE: Fetch data from JSON file instead of form input
+    fetch("employees.json")
+    .then(response => response.json())
+    .then(obj => {
+
+        let output="<table border='1'><tr><th>Name</th><th>Salary</th><th>Email</th></tr>";
+
+        // SAME: Looping through data
+        obj.forEach(emp=>{
+            output += "<tr><td>"+emp.name+"</td><td>"+emp.salary+"</td><td>"+emp.email+"</td></tr>";
+        });
+
+        output += "</table>";
+
+        document.getElementById("d").innerHTML = output;
+    });
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+----------------Fetching XML
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ajax XML Table</title>
+</head>
+<body>
+
+<button onclick="loadEmployeesXML()">Load Employees</button>
+
+<p id="d">Employee Records:</p>
+
+<script>
+
+function loadEmployeesXML(){
+
+    // DIFFERENCE: Fetch XML instead of JSON
+    fetch("employees.xml")
+    .then(response => response.text())
+    .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+    .then(data => {
+
+        let employees = data.getElementsByTagName("employee");
+
+        let output="<table border='1'><tr><th>Name</th><th>Salary</th><th>Email</th></tr>";
+
+        // DIFFERENCE: XML parsing using tag names
+        for(let i=0; i<employees.length; i++){
+
+            let name = employees[i].getElementsByTagName("name")[0].textContent;
+            let salary = employees[i].getElementsByTagName("salary")[0].textContent;
+            let email = employees[i].getElementsByTagName("email")[0].textContent;
+
+            output += "<tr><td>"+name+"</td><td>"+salary+"</td><td>"+email+"</td></tr>";
+        }
+
+        output += "</table>";
+
+        document.getElementById("d").innerHTML = output;
+    });
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// React with AJAX
+
+import React, { useState, useEffect } from "react";
+
+function App() {
+  const [weather, setWeather] = useState({});
+
+  useEffect(() => {
+    // AJAX call using fetch
+    fetch("/weather.json")
+      .then(response => response.json())
+      .then(data => setWeather(data))
+     // .catch(error => console.log(error));
+  }, []);
+
+  return (
+    <div>
+      <h2>Weather Report</h2>
+
+      <p>Temperature: {weather.temperature}</p>
+      <p>Humidity: {weather.humidity}</p>
+      <p>Condition: {weather.condition}</p>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+-------------------XML AJAX
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple AJAX XML</title>
+</head>
+<body>
+
+Name: <input type="text" id="name"><br>
+Salary: <input type="text" id="salary"><br>
+Email: <input type="email" id="email"><br>
+
+<button onclick="addEmployee()">Submit</button>
+
+<p id="d">Employee Data:</p>
+
+<script>
+
+let employees = [];
+
+function addEmployee(){
+
+    let name = document.getElementById("name").value;
+    let salary = document.getElementById("salary").value;
+    let email = document.getElementById("email").value;
+
+    employees.push({name:name,salary:salary,email:email});
+
+    showXML();
+}
+
+function showXML(){
+
+    let xml = "<employees>";
+
+    employees.forEach(e=>{
+        xml += "<employee>"+e.name+" "+e.salary+" "+e.email+"</employee>";
+    });
+
+    xml += "</employees>";
+
+    document.getElementById("d").innerHTML = xml;
+}
+
+</script>
+
+</body>
+</html>
+
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple AJAX XML</title>
+</head>
+<body>
+
+Name: <input type="text" id="name"><br>
+Salary: <input type="text" id="salary"><br>
+Email: <input type="email" id="email"><br>
+
+<button onclick="addEmployee()">Submit</button>
+
+<p id="d">Employee Data:</p>
+
+<script>
+
+let employees = [];
+
+function addEmployee(){
+
+    let name = document.getElementById("name").value;
+    let salary = document.getElementById("salary").value;
+    let email = document.getElementById("email").value;
+
+    employees.push({name:name,salary:salary,email:email});
+
+    showXML();
+}
+
+function showXML(){
+
+    let xml = "<table border='1'><tr><th>Name</th><th>Salary</th><th>Email</th></tr>";
+
+    employees.forEach(e=>{
+        xml += "<tr><td>"+e.name+"</td><td>"+e.salary+"</td><td>"+e.email+"</td></tr>";
+    });
+
+    xml += "</table>";
+
+    document.getElementById("d").innerHTML = xml;
+}
+
+</script>
+
+</body>
+</html>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+employees.json
+[
+  {"name":"John","salary":"50000","email":"john@gmail.com"},
+  {"name":"Alice","salary":"60000","email":"alice@gmail.com"}
+]
+
+
+employees.xml
+<employees>
+    <employee>
+        <name>John</name>
+        <salary>50000</salary>
+        <email>john@gmail.com</email>
+    </employee>
+    <employee>
+        <name>Alice</name>
+        <salary>60000</salary>
+        <email>alice@gmail.com</email>
+    </employee>
+</employees>
+
+
+
+movies.json
+[
+  { "title": "Inception", "rating": 8.8, "duration": "148 min" },
+  { "title": "Interstellar", "rating": 8.6, "duration": "169 min" },
+  { "title": "Avatar", "rating": 7.8, "duration": "162 min" },
+  { "title": "Titanic", "rating": 7.9, "duration": "195 min" }
+]
+
+
+---weather.json
+{
+  "temperature": "30°C",
+  "humidity": "70%",
+  "condition": "Sunny"
+}

@@ -1,0 +1,102 @@
+import React, {useState,setState} from 'react';
+ 
+function RegistrationForm1() {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const [confirmPassword,setConfirmPassword] = useState('');
+    const [submissionStatus, setSubmissionStatus] = useState('');
+ 
+    const handleInputChange = (e) => {
+        const {id , value} = e.target;
+        if(id === "firstName"){
+            setFirstName(value);
+        }
+        if(id === "lastName"){
+            setLastName(value);
+        }
+        if(id === "email"){
+            setEmail(value);
+        }
+        if(id === "password"){
+            setPassword(value);
+        }
+        if(id === "confirmPassword"){
+            setConfirmPassword(value);
+        }
+ 
+    }
+ 
+    const handleSubmit  = async (event) => {
+        event.preventDefault();
+        const formData = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+        };
+        try {
+            const response = await fetch('http://localhost:4002/submit-form', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData),
+            });
+     
+            if (response.ok) {
+                setSubmissionStatus('Form submitted successfully.');
+              // Handle success response
+            } else {
+                setSubmissionStatus('Form submission failed.');
+                // Handle error response
+            }
+          } catch (error) {
+            setSubmissionStatus('An error occurred. Please try again later.');
+        }
+    }
+    return(
+        <form onSubmit={handleSubmit}>
+        <input
+        type="text"
+        id="firstName"
+        value={firstName}
+        onChange={handleInputChange}
+        placeholder="First Name"
+    />
+    <input
+        type="text"
+        id="lastName"
+        value={lastName}
+        onChange={handleInputChange}
+        placeholder="Last Name"
+    />
+    <input
+        type="email"
+        id="email"
+        value={email}
+        onChange={handleInputChange}
+        placeholder="Email"
+    />
+    <input
+        type="password"
+        id="password"
+        value={password}
+        onChange={handleInputChange}
+        placeholder="Password"
+    />
+    <input
+        type="password"
+        id="confirmPassword"
+        value={confirmPassword}
+        onChange={handleInputChange}
+        placeholder="Confirm Password"
+    />
+    <button type="submit">Register</button>
+    {submissionStatus && <div>{submissionStatus}</div>}
+</form>  
+    )      
+}
+export default RegistrationForm1;

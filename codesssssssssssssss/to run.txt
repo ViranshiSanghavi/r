@@ -1,0 +1,15 @@
+run react
+npm create vite@latest weather
+npm install
+npm run dev
+
+
+
+run node
+node app.js
+npm install MySQL
+npm install mongodb
+
+
+AJAX, JSON, HTML
+.html (extension)

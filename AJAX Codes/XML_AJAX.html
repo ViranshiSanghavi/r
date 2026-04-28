@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple AJAX XML</title>
+</head>
+<body>
+
+Name: <input type="text" id="name"><br>
+Salary: <input type="text" id="salary"><br>
+Email: <input type="email" id="email"><br>
+
+<button onclick="addEmployee()">Submit</button>
+
+<p id="d">Employee Data:</p>
+
+<script>
+
+let employees = [];
+
+function addEmployee(){
+
+    let name = document.getElementById("name").value;
+    let salary = document.getElementById("salary").value;
+    let email = document.getElementById("email").value;
+
+    employees.push({name:name,salary:salary,email:email});
+
+    showXML();
+}
+
+function showXML(){
+
+    let xml = "<employees>";
+
+    employees.forEach(e=>{
+        xml += "<employee>"+e.name+" "+e.salary+" "+e.email+"</employee>";
+    });
+
+    xml += "</employees>";
+
+    document.getElementById("d").innerHTML = xml;
+}
+
+</script>
+
+</body>
+</html>
+
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple AJAX XML</title>
+</head>
+<body>
+
+Name: <input type="text" id="name"><br>
+Salary: <input type="text" id="salary"><br>
+Email: <input type="email" id="email"><br>
+
+<button onclick="addEmployee()">Submit</button>
+
+<p id="d">Employee Data:</p>
+
+<script>
+
+let employees = [];
+
+function addEmployee(){
+
+    let name = document.getElementById("name").value;
+    let salary = document.getElementById("salary").value;
+    let email = document.getElementById("email").value;
+
+    employees.push({name:name,salary:salary,email:email});
+
+    showXML();
+}
+
+function showXML(){
+
+    let xml = "<table border='1'><tr><th>Name</th><th>Salary</th><th>Email</th></tr>";
+
+    employees.forEach(e=>{
+        xml += "<tr><td>"+e.name+"</td><td>"+e.salary+"</td><td>"+e.email+"</td></tr>";
+    });
+
+    xml += "</table>";
+
+    document.getElementById("d").innerHTML = xml;
+}
+
+</script>
+
+</body>
+</html>
+-->

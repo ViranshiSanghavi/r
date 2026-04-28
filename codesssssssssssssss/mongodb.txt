@@ -1,0 +1,434 @@
+Got it — this is your **complete MongoDB Lab EXP:10 solution (Shell version)**, fully ready to copy + practice + write in exam.
+
+I’ll structure it exactly like a lab file so you can directly submit.
+
+---
+
+# 🟢 EXP:10 — MongoDB (COMPLETE SOLUTION)
+
+---
+
+# 🔵 1. Create Database
+
+```js id="db1"
+use employeeDB
+```
+
+---
+
+# 🔵 2. Insert Documents (with all types)
+
+👉 string, integer, date, array, embedded document
+
+```js id="insall"
+db.employees.insertMany([
+  {
+    _id: 1,
+    firstName: "Amit",
+    lastName: "Sharma",
+    salary: 9000,
+    gender: "male",
+    department: { name: "HR" },
+    skills: ["C", "C++"],
+    dob: new Date("2000-01-10")
+  },
+  {
+    _id: 2,
+    firstName: "Anita",
+    lastName: "Verma",
+    salary: 8500,
+    gender: "female",
+    department: { name: "Finance" },
+    skills: ["Java", "Python"],
+    dob: new Date("2001-03-15")
+  },
+  {
+    _id: 3,
+    firstName: "Arjun",
+    lastName: "Mehta",
+    salary: 12000,
+    gender: "male",
+    department: { name: "HR" },
+    skills: ["C", "C++", "Java"],
+    dob: new Date("2000-07-20")
+  },
+  {
+    _id: 4,
+    firstName: "Ayesha",
+    lastName: "Khan",
+    salary: 7000,
+    gender: "female",
+    department: { name: "IT" },
+    skills: ["HTML", "CSS"],
+    dob: new Date("1999-09-10")
+  },
+  {
+    _id: 5,
+    firstName: "Ravi",
+    lastName: "Patil",
+    salary: 9500,
+    gender: "male",
+    department: { name: "HR" },
+    skills: ["C++", "Python"],
+    dob: new Date("2000-12-25")
+  },
+  {
+    _id: 6,
+    firstName: "Sneha",
+    lastName: "Iyer",
+    salary: 6000,
+    gender: "female",
+    department: { name: "Finance" },
+    skills: ["Excel", "Accounting"],
+    dob: new Date("2002-05-18")
+  }
+])
+```
+
+---
+
+# 🔵 3. FILTER QUERIES
+
+---
+
+## (1) Salary > 8000 AND < 10000
+
+```js id="f1"
+db.employees.find({
+  salary: { $gt: 8000, $lt: 10000 }
+})
+```
+
+---
+
+## (2) Firstname starts with "A" (only id + firstname)
+
+```js id="f2"
+db.employees.find(
+  { firstName: /^A/ },
+  { _id: 1, firstName: 1 }
+)
+```
+
+---
+
+## (3) Employees in HR department
+
+```js id="f3"
+db.employees.find({
+  "department.name": "HR"
+})
+```
+
+---
+
+## (4) Skillset = C and C++
+
+```js id="f4"
+db.employees.find({
+  skills: { $all: ["C", "C++"] }
+})
+```
+
+---
+
+## (5) Highest salary of each department
+
+```js id="agg1"
+db.employees.aggregate([
+  {
+    $group: {
+      _id: "$department.name",
+      maxSalary: { $max: "$salary" }
+    }
+  }
+])
+```
+
+---
+
+## (6) Average salary of each department (sort desc)
+
+```js id="agg2"
+db.employees.aggregate([
+  {
+    $group: {
+      _id: "$department.name",
+      avgSalary: { $avg: "$salary" }
+    }
+  },
+  {
+    $sort: { _id: -1 }
+  }
+])
+```
+
+---
+
+## (7) Count employees in HR
+
+```js id="agg3"
+db.employees.aggregate([
+  {
+    $match: { "department.name": "HR" }
+  },
+  {
+    $count: "HR_Employees"
+  }
+])
+```
+
+---
+
+## (8) Average of all salaries
+
+```js id="agg4"
+db.employees.aggregate([
+  {
+    $group: {
+      _id: null,
+      avgSalary: { $avg: "$salary" }
+    }
+  }
+])
+```
+
+---
+
+# 🔵 4. UPDATE QUERIES
+
+---
+
+## (1) Update firstname where _id = 3
+
+```js id="u1"
+db.employees.updateOne(
+  { _id: 3 },
+  { $set: { firstName: "Arjun Kumar" } }
+)
+```
+
+---
+
+## (2) Update department name where _id = 5
+
+```js id="u2"
+db.employees.updateOne(
+  { _id: 5 },
+  { $set: { "department.name": "IT" } }
+)
+```
+
+---
+
+## (3) Update skillset of _id = 5
+
+```js id="u3"
+db.employees.updateOne(
+  { _id: 5 },
+  { $set: { skills: ["C++", "Python", "MongoDB"] } }
+)
+```
+
+---
+
+# 🔵 5. DELETE
+
+---
+
+## Delete employee with _id = 6
+
+```js id="d1"
+db.employees.deleteOne({ _id: 6 })
+```
+
+---
+
+# 🔵 6. CREATE INDEX
+
+```js id="idx1"
+db.employees.createIndex({ salary: 1 })
+```
+
+---
+
+## Retrieve salary > 8000 using index
+
+```js id="idx2"
+db.employees.find({
+  salary: { $gt: 8000 }
+})
+```
+
+---
+
+# ⚡ FINAL EXAM TRICKS
+
+* `$gt / $lt` → range
+* `$all` → multiple array match
+* `$group` → aggregation
+* `$max / $avg` → calculation
+* `$set` → update
+* `createIndex()` → performance boost
+* `/^A/` → starts with A
+
+---
+
+# 🔥 If you want next level (VERY IMPORTANT)
+
+I can also give you:
+
+✔ Viva questions from this EXP
+✔ 1-page revision sheet
+✔ 10 most repeated MongoDB exam questions
+✔ Compass vs Shell comparison answers
+
+Just tell 👍
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alright — now I’ll convert your **full MongoDB Compass question into Shell (mongosh) commands** in a clean exam-ready way.
+
+We’ll use:
+
+```js
+use college
+db.students
+```
+
+---
+
+# 🟢 1. INSERT 3 DOCUMENTS
+
+```js id="ins1"
+db.students.insertMany([
+  {
+    _id: 1,
+    student_name: "Alice",
+    student_percentage: 85,
+    student_dob: new Date("2000-05-10"),
+    student_department: "IT"
+  },
+  {
+    _id: 2,
+    student_name: "Bob",
+    student_percentage: 78,
+    student_dob: new Date("1999-08-15"),
+    student_department: "CS"
+  },
+  {
+    _id: 3,
+    student_name: "Charlie",
+    student_percentage: 88,
+    student_dob: new Date("2000-12-20"),
+    student_department: "IT"
+  }
+])
+```
+
+---
+
+# 🟢 2. percentage > 80 AND < 90
+
+```js id="q1"
+db.students.find({
+  student_percentage: { $gt: 80, $lt: 90 }
+})
+```
+
+---
+
+# 🟢 3. SORT names ASC + SHOW only name & dob
+
+```js id="q2"
+db.students.find(
+  {},
+  { student_name: 1, student_dob: 1, _id: 0 }
+).sort({ student_name: 1 })
+```
+
+---
+
+# 🟢 4. UPDATE Alice percentage
+
+```js id="q3"
+db.students.updateOne(
+  { student_name: "Alice" },
+  { $set: { student_percentage: 90 } }
+)
+```
+
+---
+
+# 🟢 5. Highest percentage of each department
+
+```js id="q4"
+db.students.aggregate([
+  {
+    $group: {
+      _id: "$student_department",
+      max_percentage: { $max: "$student_percentage" }
+    }
+  }
+])
+```
+
+---
+
+# 🟢 6. Create index on student_name
+
+```js id="q5"
+db.students.createIndex({ student_name: 1 })
+```
+
+---
+
+# 🟢 7. Students born in year 2000
+
+```js id="q6"
+db.students.find({
+  student_dob: {
+    $gte: new Date("2000-01-01"),
+    $lt: new Date("2001-01-01")
+  }
+})
+```
+
+---
+
+# ⚡ SUPER QUICK MEMORY TRICKS
+
+* Insert → `insertMany()`
+* Find → `find()`
+* Filter → `$gt`, `$lt`
+* Update → `updateOne + $set`
+* Sort → `.sort({ field: 1 })`
+* Projection → `{ field: 1 }`
+* Group → `$group + $max`
+* Index → `createIndex()`
+
+---
+
+# 🔥 Reality Check (Important)
+
+Since your syllabus includes MongoDB:
+
+* **Compass = easy scoring**
+* **Shell = viva + understanding depth**
+
+---
+
+If you want next step:
+👉 I can give you **“10 most repeated MongoDB viva questions with answers”** or
+👉 **1-page cheat sheet for BOTH Compass + Shell** (super revision ready)

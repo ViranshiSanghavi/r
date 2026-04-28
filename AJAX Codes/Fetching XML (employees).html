@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ajax XML Table</title>
+</head>
+<body>
+
+<button onclick="loadEmployeesXML()">Load Employees</button>
+
+<p id="d">Employee Records:</p>
+
+<script>
+
+function loadEmployeesXML(){
+
+    // DIFFERENCE: Fetch XML instead of JSON
+    fetch("employees.xml")
+    .then(response => response.text())
+    .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+    .then(data => {
+
+        let employees = data.getElementsByTagName("employee");
+
+        let output="<table border='1'><tr><th>Name</th><th>Salary</th><th>Email</th></tr>";
+
+        // DIFFERENCE: XML parsing using tag names
+        for(let i=0; i<employees.length; i++){
+
+            let name = employees[i].getElementsByTagName("name")[0].textContent;
+            let salary = employees[i].getElementsByTagName("salary")[0].textContent;
+            let email = employees[i].getElementsByTagName("email")[0].textContent;
+
+            output += "<tr><td>"+name+"</td><td>"+salary+"</td><td>"+email+"</td></tr>";
+        }
+
+        output += "</table>";
+
+        document.getElementById("d").innerHTML = output;
+    });
+}
+
+</script>
+
+</body>
+</html>

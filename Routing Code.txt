@@ -1,0 +1,120 @@
+react routing code shown in class
+This is Nav.jsx
+
+import { Link } from 'react-router-dom'// link is like <a> tag in html. instead of the whoel page relaod, it sends
+
+//it tells the BrowserRouter to simply update the URL in the address bar
+
+ 
+
+export const Home = () => <h2>Home Page</h2>;
+
+export const About = () => <h2>About Page</h2>;
+
+export const Contact = () => <h2>Contact Page</h2>;
+
+ 
+
+function Nav() {
+
+  return (
+
+    <nav style={{ marginRight: '20px', width: '200px' }}>
+
+      <ul style={{ listStyleType: 'none', padding: 0 }}>
+
+        <li><Link to="/">Home</Link></li>
+
+        <li><Link to="/about">About</Link></li>
+
+        <li><Link to="/contact">Contact</Link></li>
+
+      </ul>
+
+    </nav>
+
+  )
+
+}
+
+ 
+
+export default Nav
+
+ 
+
+This is main.jsx
+
+import { StrictMode } from 'react'
+
+import { createRoot } from 'react-dom/client'
+
+import { BrowserRouter } from 'react-router-dom'; //wraps entire navigation on app. context for other components like link and url
+
+import './index.css'
+
+import App from './App.jsx'
+
+ 
+
+createRoot(document.getElementById('root')).render(
+
+  <StrictMode>
+
+    <BrowserRouter>
+
+      <App />
+
+    </BrowserRouter>
+
+  </StrictMode>,
+
+)
+
+ 
+
+This is app.jsx
+
+import { useState } from 'react'
+
+import reactLogo from './assets/react.svg'
+
+import viteLogo from '/vite.svg'
+
+import { Routes, Route } from 'react-router-dom'
+
+import { Home, About, Contact } from './components/Nav';
+
+import Nav from "./components/Nav";
+
+ 
+
+function App() {
+
+return (
+
+    <>
+
+     <Header />
+
+      <Nav />
+
+       <Routes>  
+
+        <Route path="/" element={<Home />} />
+
+        <Route path="/about" element={<About />} />
+
+        <Route path="/contact" element={<Contact />} />
+
+      </Routes></>
+
+  )
+
+}
+
+ 
+
+export default App
+
+

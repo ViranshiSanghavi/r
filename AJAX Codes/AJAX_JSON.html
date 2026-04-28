@@ -1,0 +1,111 @@
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ajax JSON Example</title>
+</head>
+<body>
+
+<form>
+Name: <input type="text" id="txt_name"><br>
+Salary: <input type="text" id="txt_salary"><br>
+Email: <input type="email" id="txt_email"><br>
+
+<input type="button" value="Submit" onclick="insertEmployee()">
+</form>
+
+<p id="d">Employee Records:</p>
+
+<script>
+
+let employees = [];
+
+function insertEmployee(){
+
+    let name = document.getElementById("txt_name").value;
+    let salary = document.getElementById("txt_salary").value;
+    let email = document.getElementById("txt_email").value;
+
+    let data = {name:name,salary:salary,email:email};
+
+    employees.push(data);
+
+    loadEmployeesJSON();
+}
+
+function loadEmployeesJSON(){
+
+    let jsonData = JSON.stringify(employees);
+
+    let obj = JSON.parse(jsonData);
+
+    let output="";
+
+    obj.forEach(emp=>{
+        output += emp.name+" "+emp.salary+" "+emp.email+"<br>";
+    });
+
+    document.getElementById("d").innerHTML = output;
+}
+
+</script>
+
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ajax JSON Example</title>
+</head>
+<body>
+
+<form>
+Name: <input type="text" id="txt_name"><br>
+Salary: <input type="text" id="txt_salary"><br>
+Email: <input type="email" id="txt_email"><br>
+
+<input type="button" value="Submit" onclick="insertEmployee()">
+</form>
+
+<p id="d">Employee Records:</p>
+
+<script>
+
+let employees = [];
+
+function insertEmployee(){
+
+    let name = document.getElementById("txt_name").value;
+    let salary = document.getElementById("txt_salary").value;
+    let email = document.getElementById("txt_email").value;
+
+    let data = {name:name,salary:salary,email:email};
+
+    employees.push(data);
+
+    loadEmployeesJSON();
+}
+
+function loadEmployeesJSON(){
+
+    let jsonData = JSON.stringify(employees);
+
+    let obj = JSON.parse(jsonData);
+
+    let output="<table border='1'><tr><th>Name</th><th>Salary</th><th>Email</th></tr>";
+
+    obj.forEach(emp=>{
+        output += "<tr><td>"+emp.name+"</td><td>"+emp.salary+"</td><td>"+emp.email+"</td></tr>";
+    });
+
+    output += "</table>";
+
+    document.getElementById("d").innerHTML = output;
+}
+
+</script>
+
+</body>
+</html>

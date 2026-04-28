@@ -1,0 +1,166 @@
+sample code shown in class- To do app
+Sample to-do app code shown in class
+ 
+import { useState } from 'react'
+import reactLogofrom './assets/react.svg'
+import viteLogofrom '/vite.svg'
+import './App.css'
+import {useEffect } from "react";
+ 
+function App() {
+ const [count, setCount] = useState(0)
+ const [tasks, setTasks] = useState([]);  //This state for maintaining task list 
+ const [text, setText] = useState("");   //This state for recording what user is typing
+ const [nextId, setNextId] = useState(1);
+ 
+  useEffect(() => {                     //This is hook in react. It runs everytime compoenent re-renders. ie. only when tasks are added
+ }, [tasks]);
+ 
+ constaddTask = () => {       // This function is called when button is clicked to add task
+   if (text.trim()==="") return;
+   //... here is spread operator. It takes existing items of task array
+   //and appends new task items with new id, changed state text. 
+   setTasks([...tasks,{ id: nextId, text: text, selected: false}]); //It updates task array with new task in this format
+   setNextId(nextId+ 1);
+   setText("");      //To clear the teaxt in the field
+ };
+  constselectTask = (id) => {       // selects or unselects a task when the checkbox is clicked.
+   setTasks(
+     tasks.map(task=>               //Goes through every task in the list
+       task.id=== id                //mapping teh id to taks id
+         ? { ...task, selected: !task.selected }   //if yes , change teh status of chekcbox. 
+         :task
+     )
+   );
+ };
+  constdeleteTask = () => {         //This fucntion is called when user clicks delete button. 
+   setTasks(tasks.filter(task=> !task.selected)); // filter() goes through every task. Keeps only tasks whose id is NOT equal to the clicked task’s id
+ };
+ 
+ return (
+   <>
+    
+     <h1>To do list</h1>
+       <div>
+       <input
+         type="text"
+         placeholder="Enter a task"
+         value={text}
+         onChange={(e) => setText(e.target.value)}
+       />
+       <buttononClick={addTask}>Add</button>
+       <buttononClick={deleteTask}>Delete</button>
+       <ul>
+       {tasks.map(task=> (
+         <likey={task.id}>
+           <input
+             type="checkbox"
+             checked={task.selected}
+             onChange={() => selectTask(task.id)}
+           />
+ 
+           <span>{task.text}</span>
+         </li>
+       ))}
+     </ul>
+     </div>
+     
+     <div>
+       <ahref="https://vite.dev"target="_blank">
+         <imgsrc={viteLogo}className="logo"alt="Vite logo" />
+       </a>
+       <ahref="https://react.dev"target="_blank">
+         <imgsrc={reactLogo}className="logo react" alt="React logo" />
+       </a>
+     </div>
+     <h1>Vite + React</h1>
+     <divclassName="card">
+       <buttononClick={() => setCount((count) => count + 1)}>
+         count is {count}
+       </button>
+       <p>
+         Edit <code>src/App.jsx</code> and save to test HMR
+       </p>
+     </div>
+     <pclassName="read-the-docs">
+       Click on the Vite and React logos to learn more
+     </p>
+   </>
+ )
+}
+ 
+export defaultApp
+ 
+ 
+ 
+sample props code shown in class
+this is book.jsx:
+function Book(props) {
+  return (
+    <div className="book-card">
+      <img src={props.image} alt={props.title} />
+      <h3>{props.title}</h3>
+      <p>{props.author}</p>
+    </div>
+  );
+}
+ 
+export default Book;
+ this is bookstore. jsx
+ 
+import Book from "./Book";
+ 
+function BookStore() {
+  return (
+    <div className="bookstore">
+      <Book
+        title="The Alchemist"
+        author="Paulo Coelho"
+        image="https://covers.openlibrary.org/b/id/10523374-L.jpg"
+      />
+ 
+      <Book
+        title="Atomic Habits"
+        author="James Clear"
+        image="https://covers.openlibrary.org/b/id/11153264-L.jpg"
+      />
+ 
+      <Book
+        title="Rich Dad Poor Dad"
+        author="Robert Kiyosaki"
+        image="https://covers.openlibrary.org/b/id/10909258-L.jpg"
+      />
+ 
+      <Book
+        title="Think and Grow Rich"
+        author="Napoleon Hill"
+        image="https://covers.openlibrary.org/b/id/10958378-L.jpg"
+      />
+ 
+      <Book
+        title="The Power of Habit"
+        author="Charles Duhigg"
+        image="https://covers.openlibrary.org/b/id/10912366-L.jpg"
+      />
+ 
+      <Book
+        title="Ikigai"
+        author="Héctor García"
+        image="https://covers.openlibrary.org/b/id/11198619-L.jpg"
+      />
+    </div>
+  );
+}
+ 
+export default BookStore;
+ 
+this is app.jsx where component is rendered
+import BookStore from "./components/BookStore";
+return (
+    <>
+ <BookStore/>
+</>
+)
+}
+ 
+ 

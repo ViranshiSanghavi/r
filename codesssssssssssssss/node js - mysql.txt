@@ -1,0 +1,158 @@
+const mysql = require("mysql");
+
+const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "mydb"
+});
+
+con.connect(function(err) {
+    // SQL QUERY
+    con.query("SELECT * FROM student", function(err, result) {
+        console.log(result);
+    });
+});
+
+
+
+Got you—this is exactly what you need for exam 👍
+I’ll keep it **simple + side-by-side** so you can remember fast.
+
+---
+
+# 🟦 MYSQL (SQL WAY)
+
+Using **MySQL**
+
+## ✅ 1. Create Table
+
+```sql
+CREATE TABLE student (
+  id INT,
+  name VARCHAR(20)
+);
+```
+
+---
+
+## ✅ 2. Insert Many
+
+```sql
+INSERT INTO student VALUES
+(1, 'A'),
+(2, 'B'),
+(3, 'C');
+```
+
+---
+
+## ✅ 3. Update
+
+```sql
+UPDATE student
+SET name = 'Z'
+WHERE id = 1;
+```
+
+---
+
+## ✅ 4. Delete
+
+```sql
+DELETE FROM student
+WHERE id = 2;
+```
+
+---
+
+# 🟩 MONGODB (Compass / GUI WAY)
+
+Using **MongoDB Compass**
+
+👉 No “table” → it’s called **collection**
+
+---
+
+## ✅ 1. Create Table (Collection)
+
+* Click **Create Database**
+* Enter:
+
+  * Database: `mydb`
+  * Collection: `student`
+
+✔ Done (no code)
+
+---
+
+## ✅ 2. Insert Many
+
+* Open collection → Click **Insert Document**
+* Add multiple JSON docs:
+
+```json
+[
+  { "id": 1, "name": "A" },
+  { "id": 2, "name": "B" },
+  { "id": 3, "name": "C" }
+]
+```
+
+---
+
+## ✅ 3. Update
+
+* Click document → Edit
+  OR use filter:
+
+```json
+Filter: { "id": 1 }
+Update: { "$set": { "name": "Z" } }
+```
+
+---
+
+## ✅ 4. Delete
+
+* Use filter:
+
+```json
+{ "id": 2 }
+```
+
+* Click **Delete**
+
+---
+
+# 🔥 SUPER EASY COMPARISON (MEMORY TABLE)
+
+| Action | MySQL            | MongoDB                 |
+| ------ | ---------------- | ----------------------- |
+| Create | `CREATE TABLE`   | Create Collection (GUI) |
+| Insert | `INSERT INTO`    | Insert Document         |
+| Update | `UPDATE ... SET` | `$set`                  |
+| Delete | `DELETE FROM`    | Delete with filter      |
+
+---
+
+# 🧠 1-Line Memory Trick
+
+> “MySQL = SQL commands
+> MongoDB = JSON + buttons”
+
+---
+
+# 🎯 Exam Tip (VERY IMPORTANT)
+
+👉 If question is:
+
+* **MySQL** → Write SQL ✔️
+* **MongoDB Compass** → Explain steps + JSON ✔️
+* **MongoDB with Node** → use `insertOne()`, `find()` ✔️
+
+---
+
+If you want, I can give you:
+👉 **combined Node.js code (MySQL + MongoDB operations)**
+👉 or a **1-page cheat sheet for revision before exam**
