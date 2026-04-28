@@ -1,0 +1,103 @@
+A **custom module in Node.js** is simply a file where you write your own functions/logic and then export it so other files can use it.
+
+I’ll keep it **very simple (exam-ready + practical)** 👇
+
+---
+
+## 🔹 1. Create a custom module file
+
+👉 `math.js`
+
+```js
+// math.js
+
+function add(a, b) {
+    return a + b;
+}
+
+function sub(a, b) {
+    return a - b;
+}
+
+// export functions
+module.exports = { add, sub };
+```
+
+---
+
+## 🔹 2. Use the module in another file
+
+👉 `app.js`
+
+```js
+// app.js
+
+const math = require('./math');
+
+console.log(math.add(5, 3));  // 8
+console.log(math.sub(5, 3));  // 2
+```
+
+---
+
+## 🔹 3. Run the code
+
+```bash
+node app.js
+```
+
+---
+
+## 🔹 4. Alternative export (single function)
+
+👉 `greet.js`
+
+```js
+module.exports = function(name) {
+    return "Hello " + name;
+};
+```
+
+👉 use it:
+
+```js
+const greet = require('./greet');
+
+console.log(greet("Aksh"));
+```
+
+---
+
+## 🔹 5. Key points (important for exams)
+
+* `module.exports` → used to export data/functions
+* `require()` → used to import module
+* `./` → means current folder
+* Each file in Node.js is a module
+
+---
+
+## 🔹 Real-life example (mini use)
+
+```js
+// user.js
+function login(user) {
+    return user + " logged in";
+}
+
+module.exports = login;
+```
+
+```js
+// main.js
+const login = require('./user');
+
+console.log(login("Admin"));
+```
+
+---
+
+If you want, I can give you:
+
+* ⚡ **1-hour crash plan for Node + MySQL**
+* ⚡ **Mini project using custom modules (very useful for viva)**
